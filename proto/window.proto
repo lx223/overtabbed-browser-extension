@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package proto;
+
+message Window {
+  int32 id = 1;
+  bool focused = 2;
+  bool incognito = 3;
+
+  enum WindowType {
+    WINDOW_TYPE_UNSPECIFIED = 0;
+    WINDOW_TYPE_NORMAL = 1;
+    WINDOW_TYPE_POPUP = 2;
+    WINDOW_TYPE_PANEL = 3;
+    WINDOW_TYPE_APP = 4;
+    WINDOW_TYPE_DEVTOOLS = 5;
+  }
+  optional WindowType type = 4;
+
+  enum WindowState {
+    WINDOW_STATE_UNSPECIFIED = 0;
+    WINDOW_STATE_NORMAL = 1;
+    WINDOW_STATE_MINIMIZED = 2;
+    WINDOW_STATE_MAXIMIZED = 3;
+    WINDOW_STATE_FULLSCREEN = 4;
+    WINDOW_STATE_LOCKED_FULLSCREEN = 5;
+  }
+  optional WindowState state = 5;
+
+  optional string title = 6;
+}
+
