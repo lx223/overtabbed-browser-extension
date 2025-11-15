@@ -1,0 +1,11 @@
+# House rules
+- Always run `pnpm build` after making any code changes to ensure the extension builds successfully
+- Verify the build completes without errors before considering the task complete
+- Remove unnecessary comments
+- Update `Useful ino` section in `.cursorrules` to include context that will only be useful cross-conversation and be very very token efficient
+- Modify appropriate unit tests after code generation
+
+Useful info:
+- `pnpm` is the package manager
+- protobuf codegen: run `pnpm run codegen`
+- Theme: MUI + CSS vars via `data-theme` attr. Modes: light/dark/auto. See `src/theme/ThemeContext.tsx`

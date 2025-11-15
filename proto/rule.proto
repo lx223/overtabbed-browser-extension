@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package proto;
+
+enum SubjectType {
+  SUBJECT_TYPE_UNSPECIFIED = 0;
+  SUBJECT_TYPE_TABS = 1;
+}
+
+enum SubjectMatchOperator {
+  SUBJECT_MATCH_OPERATOR_UNSPECIFIED = 0;
+  SUBJECT_MATCH_OPERATOR_CONTAINS = 1;
+  SUBJECT_MATCH_OPERATOR_EQUALS = 2;
+  SUBJECT_MATCH_OPERATOR_STARTS_WITH = 3;
+  SUBJECT_MATCH_OPERATOR_ENDS_WITH = 4;
+  SUBJECT_MATCH_OPERATOR_REGEX = 5;
+}
+
+enum SubjectMatchField {
+  SUBJECT_MATCH_FIELD_UNSPECIFIED = 0;
+  SUBJECT_MATCH_FIELD_URL = 1;
+  SUBJECT_MATCH_FIELD_TITLE = 2;
+  SUBJECT_MATCH_FIELD_DOMAIN = 3;
+}
+
+message SubjectMatcher {
+  SubjectMatchField field = 1;
+  SubjectMatchOperator operator = 2;
+  string value = 3;
+}
+
+enum JoinOperator {
+  JOIN_OPERATOR_UNSPECIFIED = 0;
+  JOIN_OPERATOR_AND = 1;
+  JOIN_OPERATOR_OR = 2;
+}
+
+message Subject {
+  SubjectType type = 1;
+  repeated SubjectMatcher matchers = 2;
+  JoinOperator join_operator = 3;
+}
+
+enum ConditionType {
+  CONDITION_TYPE_UNSPECIFIED = 0;
+  CONDITION_TYPE_TAB_AGE = 1;
+  CONDITION_TYPE_TAB_INACTIVE_DURATION = 2;
+  CONDITION_TYPE_TAB_COUNT_EXCEEDS = 3;
+  CONDITION_TYPE_TAB_DUPLICATE = 4;
+}
+
+enum ConditionOperator {
+  CONDITION_OPERATOR_UNSPECIFIED = 0;
+  CONDITION_OPERATOR_GREATER_THAN = 1;
+  CONDITION_OPERATOR_LESS_THAN = 2;
+  CONDITION_OPERATOR_EQUALS = 3;
+  CONDITION_OPERATOR_GREATER_THAN_OR_EQUALS = 4;
+  CONDITION_OPERATOR_LESS_THAN_OR_EQUALS = 5;
+}
+
+enum TimeUnit {
+  TIME_UNIT_UNSPECIFIED = 0;
+  TIME_UNIT_MINUTES = 1;
+  TIME_UNIT_HOURS = 2;
+  TIME_UNIT_DAYS = 3;
+}
+
+message ConditionMatcher {
+  ConditionType type = 1;
+  ConditionOperator operator = 2;
+  int32 value = 3;
+  TimeUnit time_unit = 4;
+}
+
+message Condition {
+  repeated ConditionMatcher matchers = 1;
+  JoinOperator join_operator = 2;
+}
+
+enum ActionType {
+  ACTION_TYPE_UNSPECIFIED = 0;
+  ACTION_TYPE_CLOSE = 1;
+  ACTION_TYPE_MOVE_TO_GROUP = 2;
+  ACTION_TYPE_PIN = 3;
+  ACTION_TYPE_UNPIN = 4;
+  ACTION_TYPE_DISCARD = 5;
+  ACTION_TYPE_MUTE = 6;
+  ACTION_TYPE_HIGHLIGHT = 7;
+}
+
+message ActionParams {
+  optional string group_name = 1;
+  optional string group_color = 2;
+}
+
+message ActionMatcher {
+  ActionType type = 1;
+  ActionParams params = 2;
+}
+
+message Action {
+  repeated ActionMatcher matchers = 1;
+  JoinOperator join_operator = 2;
+}
+
+message Rule {
+  string id = 1;
+  string name = 2;
+  bool enabled = 3;
+  Subject subject = 4;
+  Condition condition = 5;
+  Action action = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+message RuleList {
+  repeated Rule rules = 1;
+}
+
