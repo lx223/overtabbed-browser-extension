@@ -1,1 +1,1 @@
-# overtabbed-browser-extension
+# OverTabbed - Tab Manager Browser Extension

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package proto;
+
+import "tab.proto";
+import "group.proto";
+import "window.proto";
+
+message Workspace {
+  repeated Tab tabs = 1;
+  repeated Group groups = 2;
+  repeated Window windows = 3;
+}

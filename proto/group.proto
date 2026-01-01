@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package proto;
+
+// Group represents a browser tab group
+message Group {
+  // GroupColor represents the color of a tab group
+  enum GroupColor {
+    GROUP_COLOR_UNSPECIFIED = 0;
+    GROUP_COLOR_GREY = 1;
+    GROUP_COLOR_BLUE = 2;
+    GROUP_COLOR_RED = 3;
+    GROUP_COLOR_YELLOW = 4;
+    GROUP_COLOR_GREEN = 5;
+    GROUP_COLOR_PINK = 6;
+    GROUP_COLOR_PURPLE = 7;
+    GROUP_COLOR_CYAN = 8;
+    GROUP_COLOR_ORANGE = 9;
+  }
+
+  int32 id = 1;
+  int32 window_id = 2;
+  optional string title = 3;
+  GroupColor color = 4;
+  bool collapsed = 5;
+  repeated int32 tab_ids = 6;
+}
+
