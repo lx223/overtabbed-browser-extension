@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package proto;
+
+message Tab {
+  int32 id = 1;
+  int32 window_id = 2;
+  optional int32 group_id = 3;
+  int32 index = 4;
+  optional string url = 5;
+  optional string title = 6;
+  optional string fav_icon_url = 7;
+  bool pinned = 8;
+  bool active = 9;
+  bool muted = 10;
+}
+
+message Group {
+  enum GroupColor {
+    GROUP_COLOR_UNSPECIFIED = 0;
+    GROUP_COLOR_GREY = 1;
+    GROUP_COLOR_BLUE = 2;
+    GROUP_COLOR_RED = 3;
+    GROUP_COLOR_YELLOW = 4;
+    GROUP_COLOR_GREEN = 5;
+    GROUP_COLOR_PINK = 6;
+    GROUP_COLOR_PURPLE = 7;
+    GROUP_COLOR_CYAN = 8;
+    GROUP_COLOR_ORANGE = 9;
+  }
+
+  int32 id = 1;
+  int32 window_id = 2;
+  optional string title = 3;
+  GroupColor color = 4;
+  bool collapsed = 5;
+}
+
+message Window {
+  int32 id = 1;
+  bool focused = 2;
+  bool incognito = 3;
+}
+
+message Workspace {
+  repeated Tab tabs = 1;
+  repeated Group groups = 2;
+  repeated Window windows = 3;
+}

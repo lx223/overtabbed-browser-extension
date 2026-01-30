@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package proto;
+
+message BrowserEventMessage {
+  enum EventType {
+    EVENT_UNSPECIFIED = 0;
+
+    // Tab events (1-19)
+    EVENT_TAB_UPDATED = 1;
+    EVENT_TAB_CREATED = 2;
+    EVENT_TAB_REMOVED = 3;
+    EVENT_TAB_MOVED = 4;
+    EVENT_TAB_ATTACHED = 5;
+    EVENT_TAB_DETACHED = 6;
+    EVENT_TAB_ACTIVATED = 7;
+    EVENT_TAB_HIGHLIGHTED = 8;
+    EVENT_TAB_REPLACED = 9;
+    EVENT_TAB_GROUP_CHANGED = 10;
+
+    // Tab group events (20-29)
+    EVENT_TAB_GROUP_CREATED = 20;
+    EVENT_TAB_GROUP_UPDATED = 21;
+    EVENT_TAB_GROUP_REMOVED = 22;
+    EVENT_TAB_GROUP_MOVED = 23;
+
+    // Window events (30-39)
+    EVENT_WINDOW_CREATED = 30;
+    EVENT_WINDOW_REMOVED = 31;
+    EVENT_WINDOW_FOCUS_CHANGED = 32;
+    EVENT_WINDOW_BOUNDS_CHANGED = 33;
+  }
+
+  EventType type = 1;
+}

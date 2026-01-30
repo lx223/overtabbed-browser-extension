@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "OverTabbed - Tab Manager",
+  "version": "0.0.1",
+  "description": "Manage all tabs in a convenient and visual way",
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "windows",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open Tab Manager"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "open-extensions-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Open OverTabbed extension page"
+    }
+  }
+}
+
