@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { copyFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
+import hotReloadExtension from 'hot-reload-extension-vite';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -43,7 +44,14 @@ const copyManifest = () => {
 };
 
 export default defineConfig({
-  plugins: [react(), copyManifest()],
+  plugins: [
+    react(),
+    copyManifest(),
+    hotReloadExtension({
+      log: true,
+      backgroundPath: 'src/background/index.ts',
+    }),
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -52,7 +60,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    emptyOutDir: true,
+    emptyOutDir: process.env.NODE_ENV !== 'development',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),

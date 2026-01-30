@@ -78,6 +78,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.11
         version: 0.4.24(eslint@9.39.1)
+      hot-reload-extension-vite:
+        specifier: ^1.1.0
+        version: 1.1.0
       jsdom:
         specifier: ^26.0.0
         version: 26.1.0
@@ -1687,6 +1690,9 @@ packages:
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
+
+  hot-reload-extension-vite@1.1.0:
+    resolution: {integrity: sha512-DSuJHbAZ56pbJ7u5iZ2Y0qMBKdgsGYRVm3EL07+3NqA2AhIW8+/o7xgyjEuwT4WA0gxV2wL7EMzabbEzoOBUAw==}
 
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
@@ -3837,6 +3843,13 @@ snapshots:
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
+
+  hot-reload-extension-vite@1.1.0:
+    dependencies:
+      ws: 8.18.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   html-encoding-sniffer@4.0.0:
     dependencies:
