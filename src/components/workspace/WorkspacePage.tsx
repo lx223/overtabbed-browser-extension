@@ -5,12 +5,14 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { WindowSection } from './WindowSection';
+import { QuickActions } from './QuickActions';
 import { ConfirmDialog } from '@/components/common';
 import { useWindows } from '@/hooks/useWindows';
 import { useTabs } from '@/hooks/useTabs';
 import { useGroups } from '@/hooks/useGroups';
 import { useTabActions } from '@/hooks/useTabActions';
 import { useWindowActions } from '@/hooks/useWindowActions';
+import { useWorkspaceActions } from '@/hooks/useWorkspaceActions';
 import { fuzzyMatch } from '@/utils/fuzzySearch';
 import { searchFieldSx } from '@/theme/formStyles';
 
@@ -20,10 +22,13 @@ export const WorkspacePage: React.FC = () => {
     const { groups: allGroups, loading: groupsLoading } = useGroups();
     const { closeTab } = useTabActions();
     const { sortTabsInWindow } = useWindowActions();
+    const { sortAllTabs, groupByDomain, findDuplicateTabs, closeDuplicateTabs } = useWorkspaceActions();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTabs, setSelectedTabs] = useState<Set<number>>(new Set());
     const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
     const [showCloseConfirm, setShowCloseConfirm] = useState(false);
+    const [showDedupConfirm, setShowDedupConfirm] = useState(false);
+    const [duplicateTabIds, setDuplicateTabIds] = useState<number[]>([]);
     const previousTabIdsRef = useRef<Set<number>>(new Set());
 
     const loading = windowsLoading || tabsLoading || groupsLoading;
@@ -100,6 +105,29 @@ export const WorkspacePage: React.FC = () => {
         await sortTabsInWindow(windowId, allTabs);
     }, [sortTabsInWindow, allTabs]);
 
+    const handleSortAll = useCallback(async () => {
+        await sortAllTabs(allTabs);
+    }, [sortAllTabs, allTabs]);
+
+    const handleGroupByDomain = useCallback(async () => {
+        await groupByDomain(allTabs);
+    }, [groupByDomain, allTabs]);
+
+    const handleDedup = useCallback(() => {
+        const duplicates = findDuplicateTabs(allTabs);
+        if (duplicates.length === 0) {
+            return;
+        }
+        setDuplicateTabIds(duplicates);
+        setShowDedupConfirm(true);
+    }, [findDuplicateTabs, allTabs]);
+
+    const confirmDedup = useCallback(async () => {
+        await closeDuplicateTabs(duplicateTabIds);
+        setDuplicateTabIds([]);
+        setShowDedupConfirm(false);
+    }, [duplicateTabIds, closeDuplicateTabs]);
+
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             const target = e.target as HTMLElement;
@@ -141,6 +169,13 @@ export const WorkspacePage: React.FC = () => {
                         {windows.length} window{windows.length !== 1 ? 's' : ''} · {allTabs.length} tab{allTabs.length !== 1 ? 's' : ''}
                     </Typography>
                 </Box>
+
+                <QuickActions
+                    onSort={handleSortAll}
+                    onGroup={handleGroupByDomain}
+                    onDedup={handleDedup}
+                    disabled={allTabs.length === 0}
+                />
 
                 <TextField
                     fullWidth
@@ -229,6 +264,16 @@ export const WorkspacePage: React.FC = () => {
                 confirmColor="error"
                 onConfirm={confirmBulkClose}
                 onCancel={() => setShowCloseConfirm(false)}
+            />
+
+            <ConfirmDialog
+                open={showDedupConfirm}
+                title={`Close ${duplicateTabIds.length} duplicate tab${duplicateTabIds.length !== 1 ? 's' : ''}?`}
+                confirmLabel="Close Duplicates"
+                cancelLabel="Cancel"
+                confirmColor="error"
+                onConfirm={confirmDedup}
+                onCancel={() => setShowDedupConfirm(false)}
             />
         </Box>
     );
