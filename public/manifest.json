@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "OverTabbed - Tab Manager",
   "version": "0.0.1",
-  "description": "Manage all tabs in a convenient and visual way",
+  "description": "Manage tabs in a convenient, and automated way",
   "permissions": [
     "tabs",
     "tabGroups",
@@ -34,4 +34,3 @@
     }
   }
 }
-
