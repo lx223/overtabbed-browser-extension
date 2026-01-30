@@ -4,7 +4,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { useTheme, ThemeMode } from '@/theme/ThemeContext';
 import type { TabType } from '@/App';
 
@@ -89,13 +88,6 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onTabChange }) => {
                         value="workspace"
                         label="Workspace"
                         icon={<ViewListIcon sx={{ fontSize: 16 }} />}
-                        iconPosition="start"
-                        sx={{ gap: 0.5 }}
-                    />
-                    <Tab
-                        value="rules"
-                        label="Rules"
-                        icon={<AutoFixHighIcon sx={{ fontSize: 16 }} />}
                         iconPosition="start"
                         sx={{ gap: 0.5 }}
                     />
